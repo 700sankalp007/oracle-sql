@@ -1,0 +1,297 @@
+--Display all the information of the EMP table?
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM 
+    emp;
+
+--Display unique Jobs from EMP table?
+SELECT 
+    job
+FROM 
+    emp
+GROUP BY 
+    job;
+    
+SELECT 
+    DISTINCT job
+FROM 
+    emp;
+    
+-- List the emps in the asc order of their Salaries?
+SELECT 
+    ename,sal
+FROM
+    emp
+ORDER BY
+    sal;
+    
+-- List the details of the emps in asc order of the Dptnos and desc of Jobs?
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+ORDER BY
+    deptno , job DESC;
+    
+-- Display all the unique job groups in the descending order?
+SELECT 
+    job
+FROM 
+    emp
+GROUP BY 
+    job
+ORDER BY
+    job DESC;
+    
+SELECT 
+    DISTINCT job
+FROM 
+    emp
+ORDER BY
+    job DESC;
+    
+-- Display all the details of all ‘Mgrs’
+
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM 
+    emp
+WHERE
+    job='MANAGER';
+
+-- List the emps who joined before 1981
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE
+    to_char(hiredate,'YY') < '81';
+
+-- List the Empno, Ename, Sal, Daily sal of all emps in the asc order of Annsal
+
+SELECT
+    empno,ename,sal,sal*12 as annsal
+FROM
+    emp
+ORDER BY
+    annsal;
+
+-- Display the Empno, Ename, job, Hiredate, Exp of all Mgrs
+
+SELECT 
+    empno,ename,job,hiredate,round(MONTHS_BETWEEN(SYSDATE,hiredate)) as exp
+FROM
+    emp
+WHERE
+    job='MANAGER';
+
+-- List the Empno, Ename, Sal, Exp of all emps working for Mgr 7369
+    SELECT
+    empno,ename,sal
+FROM
+    emp
+WHERE   
+    mgr!=7369;
+
+-- Display all the details of the emps whose Comm  Is more than their Sal
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE
+    comm>sal;
+    
+-- List the emps along with their Exp and Daily Sal is more than Rs 100
+SELECT
+    empno,ename,round(MONTHS_BETWEEN(SYSDATE,hiredate)) AS exp
+FROM
+    emp
+WHERE
+    sal>100;
+
+ --List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE
+    job IN('CLERK','ANALYST');
+    
+-- List the emps who joined on 1-MAY-81,3-DEC-81,17-DEC-81,19-JAN-80 in asc order of seniority
+ SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE  
+    to_char(hiredate,'DD-MM-YY') IN('01-05-81','03-12-81','17-12-81','19-01-80')
+ORDER BY
+    hiredate DESC;
+    
+-- List the emp who are working for the Deptno 10 or 20
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE
+    deptno IN(10,20);
+    
+-- List the emps who are joined in the year 81
+
+SELECT 
+    empno,ename
+FROM
+    emp
+WHERE   
+    to_char(hiredate,'YY')='81';
+
+-- List the emps Who Annual sal ranging from 22000 and 45000
+
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    (sal*12) BETWEEN 22000 AND 45000 ;
+    
+-- List the Enames those are having five characters in their Names
+SELECT
+    ename
+FROM
+    emp
+WHERE   
+    ename LIKE '_____';
+
+-- List the Enames those are starting with ‘S’ and with five characters
+
+SElECT
+    ename
+FROM
+    emp
+WHERE
+    ename LIKE 'S____';
+    
+-- List the emps those are having four chars and third character must be ‘r’
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    ename LIKE '__R_';
+    
+-- List the Five character names starting with ‘S’ and ending with ‘H’
+
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    ename LIKE 'S___H';
+    
+-- List the emps who joined in January
+
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    to_char(hiredate,'MM')='01';
+    
+-- List the emps whose names having a character set ‘ll’ together
+ SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    ename LIKE '%LL%';
+    
+-- List the emps who does not belong to Deptno 20
+ SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    deptno!=20;
+
+-- List all the emps except ‘PRESIDENT’ & ‘MGR” in asc order of Salaries
+ SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    job!='MANAGER' AND job!='PRESIDENT';
+
+-- List the emps whose Empno not starting with digit78
+
+SELECT
+    empno,ename,job,mgr,hiredate,sal,comm,deptno
+FROM
+    emp
+WHERE
+    to_char(empno) NOT LIKE '78%'; 
+
+    
+
+-- List the emps who are working under ‘MGR’
+
+
+SELECT 
+    e.empno,e.ename,e.mgr,m.ename
+FROM
+    emp e JOIN emp m
+ON 
+    e.mgr=m.empno;
+    
+SELECT
+    e.empno,e.ename,e.mgr,m.ename
+FROM 
+    emp e  join emp m
+    on e.mgr=m.empno;
+
+
+-- List the emps who joined in any year but not belongs to the month of March
+SELECT 
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE
+    to_char(hiredate,'MM')!='03';
+    
+-- List all the Clerks of Deptno 20
+
+SELECT 
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    job='CLERK' AND deptno=20;
+    
+-- List the emps of Deptno 30 or 10 joined in the year 1981
+SELECT 
+    empno,ename,job,mgr,hiredate,sal,comm,deptno,branchno
+FROM
+    emp
+WHERE   
+    deptno  IN (10,30) AND to_char(hiredate,'YY')='81';
+    
+-- Display the details of SMITH
+SELECT 
+    empno,ename,job,mgr,hiredate,sal,comm,deptno
+FROM
+    emp
+WHERE   
+    ename='SMITH';
+
+-- Display the location of SMITH
+
+SELECT 
+    location
+FROM
+    branch
+WHERE
+branchno=(SELECT branchno FROM dept WHERE Deptno = (SELECT Deptno FROM emp WHERE ename='SMITH'));
+
+
+    
+
+
+ 
