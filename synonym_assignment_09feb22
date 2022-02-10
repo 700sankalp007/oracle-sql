@@ -1,0 +1,35 @@
+
+CREATE TABLE rec(
+recid   NUMBER CONSTRAINT PK_REC_RECID PRIMARY KEY,
+rname   VARCHAR2(20));
+
+INSERT INTO rec VALUES(1,'record_1');
+INSERT INTO rec VALUES(2,'record_2');
+INSERT INTO rec VALUES(3,'record_3');
+INSERT INTO rec VALUES(4,'record_4');
+INSERT INTO rec VALUES(5,'record_5');
+INSERT INTO rec VALUES(6,'record_6');
+INSERT INTO rec VALUES(7,'record_7');
+
+SELECT * FROM rec;
+commit;
+
+SHOW user;
+
+--creating synonym
+
+CREATE PUBLIC SYNONYM sy_rec FOR c##test.rec;
+
+--replaceing synonym
+
+CREATE OR REPLACE PUBLIC SYNONYM syn_rec FOR c##test.rec;
+
+SELECT * FROM syn_rec;
+
+--droping synonym
+DROP PUBLIC SYNONYM syn_rec FORCE;
+DROP PUBLIC SYNONYM sy_rec FORCE;
+
+
+
+

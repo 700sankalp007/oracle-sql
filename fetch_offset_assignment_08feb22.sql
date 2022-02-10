@@ -1,0 +1,48 @@
+--FETCH
+--FETCH FIRST|NEXT <number> ROW|ROWS ONLY 
+SELECT ename,sal
+FROM emp
+FETCH FIRST 3 ROWS ONLY;--FIRST,ROWS
+
+SELECT sal,ename,job
+FROM emp
+FETCH NEXT 3 ROWS ONLY;--NEXT,ROWS
+
+SELECT empno,ename,mgr,sal,comm
+FROM emp
+FETCH FIRST 3 ROW ONLY;--FIRST,ROW
+
+SELECT sal,ename,job
+FROM emp
+FETCH NEXT 3 ROW ONLY;--NEXT,ROW
+
+--fetch with ties
+--FETCH FIRST <number> ROWS WITH TIES
+
+SELECT ename,sal
+FROM emp
+ORDER BY sal
+FETCH FIRST 4 ROWS WITH TIES;
+
+--Limit by percentage of rows example
+
+SELECT *
+FROM emp
+FETCH FIRST 10 PERCENT ROWS ONLY;
+
+--OFFSET
+--OFFSET <number> ROWS|ROW
+--FETCH..........
+SELECT *
+FROM emp
+ORDER BY empno
+OFFSET 2 ROW;
+
+SELECT *
+FROM emp
+ORDER BY empno
+OFFSET 5 ROWS
+FETCH FIRST 2 ROW ONLY;
+
+
+
