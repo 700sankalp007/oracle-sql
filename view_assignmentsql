@@ -1,0 +1,64 @@
+--VIEW assignment
+--################################################
+--CREATING VIEW
+--CREATE VIEW <vw_view_name> AS <defining-query>
+
+CREATE VIEW vw_emp 
+AS
+    SELECT empno,ename,job
+    FROM emp;
+    
+SELECT *
+FROM vw_emp;
+
+--view WITH READ ONLY
+--with this we cannot change the content of the table
+CREATE VIEW vw_emp_temp 
+AS
+    SELECT ename,hiredate
+    FROM emp
+WITH READ ONLY;
+
+SELECT *
+FROM vw_emp_temp;
+
+--##############################################################
+--create view select emps who are working under manager
+
+CREATE VIEW vw_emp_mgr(mgrno,mgrname,empno,empname)
+AS
+    SELECT m.empno,m.ename,e.empno,e.ename
+    FROM emp e INNER JOIN emp m
+    ON m.mgr=e.empno;
+    
+
+SELECT *
+FROM vw_emp_mgr;
+
+
+CREATE VIEW vw_emp_branch_dept(ename,dname,location)
+AS
+    SELECT emp.ename,dept.dname,branch.location
+    FROM emp INNER JOIN dept
+    USING (deptno)
+    INNER JOIN branch
+    USING(branchno)
+
+WITH READ ONLY;
+
+SELECT *
+FROM vw_emp_branch_dept;
+
+--DROP VIEW
+--DROP VIEW <vw_view_name> [CASCADE CONSTRAINT];
+
+DROP VIEW VW_EMP_MGR CASCADE CONSTRAINT;
+DROP VIEW vw_emp CASCADE CONSTRAINT;
+DROP VIEW vw_emp_temp CASCADE CONSTRAINT;
+DROP VIEW vw_emp_branch_dept CASCADE CONSTRAINTS;
+
+--we can user update and delete same in view as in normal table
+
+
+
+

@@ -1,0 +1,25 @@
+--PRINT FIRST 5 RECORDS[EMPNO,ENAME,JOB] FROM EMP
+--USING PL/SQL
+DECLARE 
+v_empno emp.empno%type;
+v_ename emp.ename%type;
+v_job emp.job%type;
+
+v_rownum number;
+v_loopvar number:=1;
+
+BEGIN
+    
+    LOOP
+    
+        EXIT WHEN v_loopvar>5;
+        SELECT empno,ename,job,t into v_empno,v_ename,v_job,v_rownum
+        FROM (SELECT empno,ename,job,ROW_NUMBER() OVER( order by empno) as t  
+        FROM emp)
+        WHERE t=v_loopvar;
+
+        DBMS_OUTPUT.put_line(v_empno||' '||v_ename||' '||v_job);
+        v_loopvar:=v_loopvar+1;
+     END LOOP;
+    
+END;
