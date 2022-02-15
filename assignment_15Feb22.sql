@@ -3752,9 +3752,12 @@ CREATE OR REPLACE VIEW  vw_10Most_Expensive_Products AS
 
 --5 5. vwCustomer_Supplier_by_City
 
-SELECT
-
+CREATE OR REPLACE VIEW vw_Customer_Supplier_by_City AS
+    SELECT city,companyname,contactname,'supplier' as realtionship
+    FROM Suppliers
+    UNION
+    SELECT city,companyname,contactname,'customer' as realtionship
+    FROM customers;
 
     
-
 
